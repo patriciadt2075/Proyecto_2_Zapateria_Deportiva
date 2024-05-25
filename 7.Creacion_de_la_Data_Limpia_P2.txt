@@ -1,0 +1,64 @@
+************************************************************************************************
+***********************************Creación de la Data Limpia***********************************
+************************************************************************************************
+
+La data inicial está compuesta por 5 tablas: "brands", "finance", "info", "reviews" y "traffic". Se eliminará la tabla "traffic" directamente de la estructura del modelo ya que solo muestra como información util el periodo de trabajo de la zapatería, comprendido desde el 1 de marzo del 2018 hasta el 12 de abril del 2020. A las 4 tablas restantes se les eliminarán los campos redundantes y se renombrarán aquellos campos que serán conservados. A las celdas vacías se les colocará Null y, finalmente, se eliminarán todos los registros que contengan algún valor Null usando el siguiente código: 
+
+--DELETE FROM "Nombre_de_la_Tabla" WHERE "Nombre_del_Campo" is Null
+
+A partir de  los campos de las 4 tablas, que fueron previamente limpiadas, se construirá una nueva tabla con los siguientes campos: ID_Modelo, Serial_Modelo, Modelo, Marca, Precio_de_Venta(USD), Precio_con_Descuento(USD), Descuento(%), Total_de_Ventas(USD), Num_de_Unidades_Vendidas, Num_de_Reseñas y ID_Intervalo. Es importante cuidar que la variable de cada campo de la nueva tabla sea la correcta, es decir, que los campos con valores enteros tengan variable "INTEGER", los campos con valores decimales tengan variable "NUMERIC" y los campos de texto tengan variable "TEXT".
+
+Los campos que serán trasladados íntegramente desde las 4 tablas iniciales limpias a la nueva tabla son: Serial_Modelo, Modelo, Marca, Precio_de_Venta(USD), Precio_con_Descuento(USD), Total_de_Ventas(USD) y Num_de_Reseñas. Se creará un campo llamado ID_Modelo que será la primary key auto-incrementable. Para pasar los campos de la tabla de origen a la nueva tabla se usa el siguiente código:
+
+--INSERT INTO Nueva Tabla (Campo_Nueva_Tabla)
+--SELECT Campo_Origen
+--FROM Tabla_Origen
+
+Los campos calculados de la nueva tabla son: Descuento(%), Num_de_Unidades_Vendidas y ID_Intevalo. A continuación, se mostrará el código con el cálculo correspondiente a estos campos y como se insertan en la nueva tabla.
+
+******************************************
+*****Columna calculada "Descuento(%)"*****
+******************************************
+
+--UPDATE Nueva_Tabla
+--SET "Descuento(%)" = ( ("Precio_de_Venta(USD)" - "Precio_con_Descuento(USD)")*100)/"Precio_de_Venta(USD)"
+
+*********************************************************
+*****Columna calculada "Número de Unidades Vendidas"*****
+*********************************************************
+
+--UPDATE Nueva_Tabla
+--SET "Num_de_Unidades_Vendidas" = "Total_de_Ventas(USD)"/"Precio_con_Descuento(USD)"
+
+******************************************
+*****Columna calculada "ID_Intervalo"*****
+******************************************
+
+--*****Num_de_Unidades_Vendidas >= 0 and Num_de_Unidades_Vendidas < 50*****
+--UPDATE Nueva_Tabla
+--SET "ID_Intervalo" = 3
+--WHERE "Num_de_Unidades_Vendidas" >= 0 
+--AND "Num_de_Unidades_Vendidas" < 50
+
+--*****Num_de_Unidades_Vendidas >= 50 and Num_de_Unidades_Vendidas < 100*****
+--UPDATE Nueva_Tabla
+--SET "ID_Intervalo" = 2
+--WHERE "Num_de_Unidades_Vendidas" >= 50
+--AND "Num_de_Unidades_Vendidas" < 100
+
+--*****Num_de_Unidades_Vendidas >= 100***** 
+--UPDATE Nueva_Tabla
+--SET "ID_Intervalo" = 1
+--WHERE "Num_de_Unidades_Vendidas" >= 100
+
+Finalmente, se crea la tabla llamada "Zapateria_Deportiva_1" que es la misma "Nueva_Tabla", solo que ordenada por Num_de_Unidades_Vendidas de forma descendente. A partir de la tabla "Zapateria_Deportiva_1" se elaborará el modelo de datos que se exportará a Power BI para la creación del dashboard.
+_________________________________________________________________________________________________________________________
+
+Nota importante: Hay un error en el campo  Precio_de_Venta(USD), donde existen valores iguales a cero para este campo, mientras que para estos mismos valores existen valores del campo Precio_con_Descuento(USD) mayores a cero, lo cual es incongruente, ya que todos los productos en venta deben tener precios y estos siempre deben ser mayores o iguales a los precios con descuento de estos mismos productos. Para solucionar este error se ejecutan los siguientes códigos:
+
+--UPDATE "Zapateria_Deportiva_1"
+--SET "Precio_de_Venta(USD)" = "Precio_con_Descuento(USD)"
+--WHERE "Precio_de_Venta(USD)" = 0
+
+--UPDATE "Zapateria_Deportiva_1"
+--SET "Descuento(%)" = ( ("Precio_de_Venta(USD)" - "Precio_con_Descuento(USD)")*100)/"Precio_de_Venta(USD)"

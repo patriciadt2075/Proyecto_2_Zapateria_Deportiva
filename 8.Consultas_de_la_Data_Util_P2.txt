@@ -1,0 +1,97 @@
+***********
+**Modelos**
+***********
+
+--Modelos -> (Num_de_Unidades_Vendidas >= 0)
+--SELECT * FROM Zapateria_Deportiva_2
+
+--Modelos -> (50 <= Num_de_Unidades_Vendidas < 100)
+--SELECT * FROM Zapateria_Deportiva_2
+--WHERE Num_de_Unidades_Vendidas >= 50 
+--AND Num_de_Unidades_Vendidas" < 100
+
+--Modelos -> (Num_de_Unidades_Vendidas >= 100)
+--SELECT * FROM Zapateria_Deportiva_2 
+--WHERE Num_de_Unidades_Vendidas >= 100
+
+
+
+**********
+**Ventas**
+**********
+
+--Total_de_Ventas(USD) -> (Num_de_Unidades_Vendidas >= 0)
+--SELECT SUM("Total_de_Ventas(USD)")
+--FROM Zapateria_Deportiva_2
+
+--Total_de_Ventas(USD) -> (50 <= Num_de_Unidades_Vendidas < 100)
+--SELECT SUM("Total_de_Ventas(USD)") 
+--FROM Zapateria_Deportiva_2
+--WHERE Num_de_Unidades_Vendidas >= 50 
+--AND Num_de_Unidades_Vendidas < 100
+
+--Total_de_Ventas(USD) -> (Num_de_Unidades_Vendidas >= 100)
+--SELECT SUM("Total_de_Ventas(USD)") 
+--FROM Zapateria_Deportiva_2
+--WHERE Num_de_Unidades_Vendidas >= 100
+
+
+
+**************
+**Descuentos**
+**************
+
+--Número_de_Modelos_con_Descuento -> (Num_de_Unidades_Vendidas >= 0)
+--SELECT * FROM Zapateria_Deportiva_2
+--WHERE "Descuento(%)" != 0
+
+--Número_de_Modelos_sin_Descuento -> (Num_de_Unidades_Vendidas >= 0)
+--SELECT * FROM Zapateria_Deportiva_2 
+--WHERE "Descuento(%)" = 0
+
+--Número_de_Modelos_con_Descuento -> (50 <= Num_de_Unidades_Vendidas < 100)
+--SELECT * FROM Zapateria_Deportiva_2 
+--WHERE "Num_de_Unidades_Vendidas" >= 50 
+--AND Num_de_Unidades_Vendidas < 100
+--AND "Descuento(%)" != 0
+
+--Número_de_Modelos_sin_Descuento -> (50 <= Num_de_Unidades_Vendidas < 100)
+--SELECT * FROM Zapateria_Deportiva_2
+--WHERE "Num_de_Unidades_Vendidas" >= 50 
+--AND Num_de_Unidades_Vendidas < 100
+--AND "Descuento(%)" = 0
+
+--Número_de_Modelos_con_Descuento -> (Num_de_Unidades_Vendidas >= 100)
+--SELECT * FROM Zapateria_Deportiva_2
+--WHERE Num_de_Unidades_Vendidas >= 100
+--AND "Descuento(%)" != 0
+
+--Número_de_Modelos_sin_Descuento -> (Num_de_Unidades_Vendidas >= 100)
+--SELECT * FROM Zapateria_Deportiva_2
+--WHERE Num_de_Unidades_Vendidas >= 100
+--AND "Descuento(%)" = 0
+
+
+
+***********
+**Reseñas**
+***********
+
+--Número de modelos con reseña 
+--SELECT * FROM Zapateria_Deportiva_2
+--WHERE "Num_de_Reseñas" != 0
+
+--Total_de_Reseñas -> (Num_de_Unidades_Vendidas >= 0)
+--SELECT SUM("Num_de_Reseñas") 
+--FROM Zapateria_Deportiva_2
+
+--Total_de_Reseñas -> (50 <= Num_de_Unidades_Vendidas < 100)
+--SELECT SUM("Num_de_Reseñas") 
+--FROM Zapateria_Deportiva_2
+--WHERE Num_de_Unidades_Vendidas >= 50 
+--AND Num_de_Unidades_Vendidas < 100
+
+--Total_de_Reseñas -> (Num_de_Unidades_Vendidas >= 100)
+--SELECT SUM("Num_de_Reseñas") 
+--FROM Zapateria_Deportiva_2
+--WHERE Num_de_Unidades_Vendidas >= 100  
